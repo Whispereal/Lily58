@@ -10,6 +10,36 @@
 #include <dt-bindings/zmk/ext_power.h>
 
 / {
+
+    macros {
+        macro_underscore: macro_underscore {    //ASCII码下划线宏
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_press &kp LALT &mo 1>
+                , <&macro_tap &kp KP_N9 &kp KP_N5>
+                , <&macro_release &kp LALT &mo 1>
+                ;
+        };
+        macro_multiply: macro_multiply {    //ASCII码乘号宏
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_press &kp LALT &mo 1>
+                , <&macro_tap &kp KP_N2 &kp KP_N1 &kp KP_N5>
+                , <&macro_release &kp LALT &mo 1>
+                ;
+        };      
+        macro_todo: macro_todo {    //todo list 宏
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_tap &kp KP_MINUS &kp SPACE &kp LBKT &kp SPACE &kp RBKT &kp SPACE>
+                ;
+        };      
+    };
+
+
     keymap {
         compatible = "zmk,keymap";
 
@@ -21,11 +51,11 @@
 // | SHIFT |  Z  |  X  |  C   |  V   |  B   |   "["  |  |  "]"  |  N   |  M    |  ,    |  .   |   /   | SHIFT |
 //                     | ALT  | GUI  | LOWER|  SPACE |  | ENTER | RAISE| BSPC  | GUI   |
             bindings = <
-&kp ESC   &kp Q &kp W &kp E   &kp R   &kp T                     &kp Y &kp U   &kp I    &kp O  &kp P   &kp BSPC
-&kp TAB   &kp A  &kp S  &kp D    &kp F    &kp G                      &kp H  &kp J    &kp K     &kp L   &kp SEMI    &kp SQT
-&kp LSHFT &kp Z  &kp X  &kp C    &kp V    &kp B                      &kp N  &kp M    &kp COMMA     &kp DOT   &kp SLASH &kp BSLH
-&kp KP_N1 &kp KP_N2  &kp KP_N3  &kp KP_N4    &kp KP_N5    &kp KP_N6  &kp KP_N7   &kp KP_N8 &kp KP_N9  &kp A    &kp B &kp C &kp D &kp E
-                        &kp F &kp G &kp H  &kp J  &kp K  &kp L  &kp M &kp N
+&kp ESC         &kp Q     &kp W       &kp E      &kp R        &kp T                                 &kp Y      &kp U      &kp I       &kp O     &kp P       &kp BSPC
+&kp TAB         &kp A     &kp S       &kp D      &lt 3 F      &kp G                                 &kp H      &kp J      &kp K       &kp L     &kp SEMI    &kp SQT
+&kp LSHFT       &kp Z     &kp X       &kp C      &kp V        &lt 5 B                               &kp N      &kp M      &kp COMMA   &kp DOT   &kp SLASH   &kp BSLH
+&none           &none     &kp LBKT    &kp RBKT   &mo 1        &kp SPACE    &kp CAPS       &mo 3     &kp ENTER  &mo 2      &kp MINUS   &kp EQUAL &none       &none
+                &none     &kp LCTRL   &kp N1     &kp LALT                                           &kp DEL    &kp LWIN   &kp GRAVE   &none
             >;
 
             sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>;
@@ -39,11 +69,11 @@
 // |       |     |     |      |      |      |        |  |       |      |  _    |  +    |  {   |   }   |  "|"  |
 //                     |      |      |      |        |  |       |      |       |       |
             bindings = <
-&bt BT_CLR &bt BT_SEL 0     &bt BT_SEL 1      &bt BT_SEL 2      &bt BT_SEL 3 &bt BT_SEL 4                 &trans    &trans    &trans    &trans    &trans    &trans
-&kp F1     &kp F2           &kp F3            &kp F4            &kp F5       &kp F6                       &kp F7    &kp F8    &kp F9    &kp F10   &kp F11   &kp F12
-&kp GRAVE  &kp EXCL         &kp AT            &kp HASH          &kp DOLLAR   &kp PRCNT                    &kp CARET &kp AMPS  &kp ASTRK &kp LPAR  &kp RPAR  &kp TILDE
-&trans     &ext_power EP_ON &ext_power EP_OFF &ext_power EP_TOG &trans       &trans    &trans   &trans    &trans    &kp MINUS &kp PLUS  &kp LBRC  &kp RBRC  &kp PIPE
-                                              &trans            &trans       &trans    &trans   &trans    &trans    &trans    &trans
+&kp ESC         &kp Q     &kp W       &kp UP     &kp R        &kp LBRC                                 &kp RBRC      &kp KP_N7      &kp KP_N8       &kp KP_N9       &kp P              &kp BSPC
+&kp TAB         &kp A     &kp LEFT    &kp DOWN   &kp RIGHT    &kp LPAR                                 &kp RPAR      &kp KP_N4      &kp KP_N5       &kp KP_N6       &kp KP_MULTIPLY    &kp KP_PLUS
+&kp LSHFT       &kp Z     &kp X       &kp C      &kp V        &kp B                                    &kp N         &kp KP_N1      &kp KP_N2       &kp KP_N3       &kp KP_DIVIDE      &kp KP_MINUS
+&none           &none     &kp LBKT    &kp RBKT   &mo 1        &kp SPACE    &kp CAPS           &trans   &kp ENTER     &mo 2          &kp KP_N0       &kp KP_DOT      &none              &none
+                &none     &kp LCTRL   &kp N1     &kp LALT                                              &kp DEL       &kp LWIN       &kp GRAVE       &none
             >;
 
             sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>;
@@ -57,14 +87,233 @@
 // |   F7  |  F8 |  F9 |  F10 |  F11 |  F12 |        |  |       |  +   |   -   |   =   |  [   |   ]   |   \   |
 //                     |      |      |      |        |  |       |      |       |       |
             bindings = <
-&trans    &trans &trans &trans  &trans  &trans                       &trans      &trans    &trans    &trans   &trans    &trans
-&kp GRAVE &kp N1 &kp N2 &kp N3  &kp N4  &kp N5                       &kp N6      &kp N7    &kp N8    &kp N9   &kp N0    &trans
-&kp F1    &kp F2 &kp F3 &kp F4  &kp F5  &kp F6                       &trans      &kp LEFT  &kp DOWN  &kp UP   &kp RIGHT &trans
-&kp F7    &kp F8 &kp F9 &kp F10 &kp F11 &kp F12   &trans   &trans    &kp KP_PLUS &kp MINUS &kp EQUAL &kp LBKT &kp RBKT  &kp BSLH
-                        &trans  &trans  &trans    &trans   &trans    &trans      &trans    &trans
+&kp ESC         &kp Q     &kp W       &kp UP     &kp R        &kp LBRC                                 &kp RBRC      &kp KP_N7      &kp KP_NUMLOCK   &kp KP_N9       &kp P              &kp C_MUTE
+&kp TAB         &kp A     &kp LEFT    &kp DOWN   &kp RIGHT    &kp LPAR                                 &kp RPAR      &kp HOME       &kp END          &kp PG_UP       &kp PG_DN          &kp C_VOL_UP
+&kp LSHFT       &kp N1    &kp N2      &kp N3     &kp N4       &kp N5                                   &kp N6        &kp N7         &kp N8           &kp N9          &kp N0             &kp C_VOL_DN
+&none           &none     &kp LBKT    &kp RBKT   &mo 1        &kp SPACE    &kp CAPS           &trans   &kp ENTER     &mo 2          &kp KP_N0        &kp KP_DOT      &none              &none
+                &none     &kp LCTRL   &kp N1     &kp LALT                                              &kp DEL       &kp LWIN       &kp GRAVE        &none
             >;
 
             sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>;
         };
+
+        founction_layer {
+// ------------------------------------------------------------------------------------------------------------
+// |       |     |     |      |      |      |                   |      |       |       |      |       |       |
+// |   `   |  1  |  2  |  3   |  4   |  5   |                   |  6   |   7   |   8   |  9   |   0   |       |
+// |   F1  |  F2 |  F3 |  F4  |  F5  |  F6  |                   |      |   <-  |   v   |  ^   |  ->   |       |
+// |   F7  |  F8 |  F9 |  F10 |  F11 |  F12 |        |  |       |  +   |   -   |   =   |  [   |   ]   |   \   |
+//                     |      |      |      |        |  |       |      |       |       |
+            bindings = <
+&trans         &trans     &trans    &trans   &trans    &trans                                 &kp F7      &kp F8      &kp F9      &kp F10      &kp F11    &kp F12
+&trans         &trans     &trans    &trans   &trans    &trans                                 &kp F1      &kp F2      &kp F3      &kp F4       &kp F5     &kp F6
+&trans         &trans     &trans    &trans   &trans    &trans                                 &trans      &trans      &trans      &trans       &trans     &trans
+&none          &none      &trans    &trans   &trans    &trans    &trans           &trans      &trans      &trans      &trans      &trans       &none      &none
+               &none      &trans    &trans   &trans                                           &trans      &trans      &trans      &none
+            >;
+
+            sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>;
+        };
+
+        lock_layer {
+// ------------------------------------------------------------------------------------------------------------
+// |       |     |     |      |      |      |                   |      |       |       |      |       |       |
+// |   `   |  1  |  2  |  3   |  4   |  5   |                   |  6   |   7   |   8   |  9   |   0   |       |
+// |   F1  |  F2 |  F3 |  F4  |  F5  |  F6  |                   |      |   <-  |   v   |  ^   |  ->   |       |
+// |   F7  |  F8 |  F9 |  F10 |  F11 |  F12 |        |  |       |  +   |   -   |   =   |  [   |   ]   |   \   |
+//                     |      |      |      |        |  |       |      |       |       |
+            bindings = <
+&none         &none     &none    &none   &none    &none                                 &none      &none      &none      &none      &none      &none
+&none         &none     &none    &none   &none    &none                                 &none      &none      &none      &none       &none     &none
+&none         &none     &none    &none   &none    &none                                 &none      &none      &none      &none       &none     &none
+&none         &none     &none    &none   &none    &none    &none           &none        &none      &none      &none      &none       &none     &none
+              &none     &none    &none   &none                                          &none      &none      &none      &none
+            >;
+
+            sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>;
+        };
+
+        bluetooth_layer {
+// ------------------------------------------------------------------------------------------------------------
+// |       |     |     |      |      |      |                   |      |       |       |      |       |       |
+// |   `   |  1  |  2  |  3   |  4   |  5   |                   |  6   |   7   |   8   |  9   |   0   |       |
+// |   F1  |  F2 |  F3 |  F4  |  F5  |  F6  |                   |      |   <-  |   v   |  ^   |  ->   |       |
+// |   F7  |  F8 |  F9 |  F10 |  F11 |  F12 |        |  |       |  +   |   -   |   =   |  [   |   ]   |   \   |
+//                     |      |      |      |        |  |       |      |       |       |
+            bindings = <
+&none         &none     &none    &none   &none    &none                                 &none      &none      &none      &none      &none      &none
+&none         &none     &none    &none   &none    &none                                 &none      &none      &none      &none       &none     &none
+&none         &none     &none    &none   &none    &none                                 &none      &none      &none      &none       &none     &none
+&none         &none     &none    &none   &none    &none    &none           &none        &none      &none      &none      &none       &none     &none
+              &none     &none    &none   &none                                          &none      &none      &none      &none
+            >;
+
+            sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>;
+        };
+
     };
+
+    combos {
+        compatible = "zmk,combos";
+        combo_tab { //A+S=Tab
+            timeout-ms = <50>;
+            key-positions = <13 14>;
+            bindings = <&kp TAB>;
+            layers = <0>;
+        };
+        combo_underscore {  //B+N=_ (通过ASCII码的宏实现，宏定义见文件开头)
+            timeout-ms = <50>;
+            key-positions = <29 30>;
+            bindings = <&macro_underscore>;
+            layers = <0>;
+        };
+        combo_minus {   //G+H=-
+            timeout-ms = <50>;
+            key-positions = <17 18>;
+            bindings = <&kp KP_MINUS>;
+            layers = <0>;
+        };       
+        combo_LeftBrace {   //V+B={
+            timeout-ms = <50>;
+            key-positions = <28 29>;
+            bindings = <&kp LBRC>;
+            layers = <0>;
+        };    
+        combo_RightBrace {  //N+M=}
+            timeout-ms = <50>;
+            key-positions = <30 31>;
+            bindings = <&kp RBRC>;
+            layers = <0>;
+        };        
+        combo_LeftParenthesis { //F+G=(
+            timeout-ms = <50>;
+            key-positions = <16 17>;
+            bindings = <&kp LPAR>;
+            layers = <0>;
+        };          
+        combo_RightParenthesis {    //H+J=)
+            timeout-ms = <50>;
+            key-positions = <18 19>;
+            bindings = <&kp RPAR>;
+            layers = <0>;
+        };   
+        combo_LeftBracket { //R+T=[
+            timeout-ms = <50>;
+            key-positions = <4 5>;
+            bindings = <&kp LBKT>;
+            layers = <0>;
+        };    
+        combo_RightBracket {    //Y+U=]
+            timeout-ms = <50>;
+            key-positions = <6 7>;
+            bindings = <&kp RBKT>;
+            layers = <0>;
+        };
+        combo_equal {   //"/?"+"\|"="="(默认层和数字层均生效)
+            timeout-ms = <50>;
+            key-positions = <34 35>;
+            bindings = <&kp EQUAL>;
+            layers = <0 1>;
+        };  
+        combo_dot { //".>"+"/?"="."(仅在数字层生效)
+            timeout-ms = <50>;
+            key-positions = <33 34>;
+            bindings = <&kp KP_DOT>;
+            layers = <1>;
+        };                   
+        combo_tilde {   //T+Y=_或——(根据输入法状态输出不同)
+            timeout-ms = <50>;
+            key-positions = <5 6>;
+            bindings = <&kp UNDER>;
+            layers = <0>;
+        };     
+        combo_grave {   //esc+Q=`或~
+            timeout-ms = <50>;
+            key-positions = <0 1>;
+            bindings = <&kp GRAVE>;
+            layers = <0>;
+        };    
+        combo_caps {    //alt+A=CAPS
+            timeout-ms = <50>;
+            key-positions = <12 13>;
+            bindings = <&kp CAPS>;
+            layers = <0>;
+        };   
+        combo_multiply {    //;+'=乘号（通过ASCII码宏实现）
+            timeout-ms = <50>;
+            key-positions = <22 23>;
+            bindings = <&macro_multiply>;
+            layers = <0>;
+        };   
+        combo_lock {    //Y+L+ENTER=锁定键盘（只能再次按该组合键退出）
+            timeout-ms = <100>;
+            key-positions = <6 21 44>;
+            bindings = <&tog 4>;
+        };   
+        combo_LeftBackSpace {   //B+S=Backspace(左手退格键)
+            timeout-ms = <50>;
+            key-positions = <14 29>;
+            bindings = <&kp BSPC>;
+            layers = <0>;
+        };   
+        combo_todo {    //T+D=Markdown中todo list快捷键
+            timeout-ms = <50>;
+            key-positions = <5 15>;
+            bindings = <&macro_todo>;
+            layers = <0>;
+        };   
+        combo_bt0 {     //先按住B进入蓝牙层，然后同时按ESC+左手切层键+右手数字键切换蓝牙配置文件
+            timeout-ms = <100>;
+            key-positions = <0 40 46>;
+            bindings = <&bt BT_SEL 0>;
+            layers = <5>;
+        };   
+        combo_bt1 {
+            timeout-ms = <100>;
+            key-positions = <0 31 40>;
+            bindings = <&bt BT_SEL 1>;
+            layers = <5>;
+        };   
+        combo_bt2 {
+            timeout-ms = <100>;
+            key-positions = <0 32 40>;
+            bindings = <&bt BT_SEL 2>;
+            layers = <5>;
+        };   
+        combo_bt3 {
+            timeout-ms = <100>;
+            key-positions = <0 33 40>;
+            bindings = <&bt BT_SEL 3>;
+            layers = <5>;
+        };   
+        combo_bt4 {     //该文件暂无法使用，原因未知
+            timeout-ms = <100>;
+            key-positions = <0 40 37>;
+            bindings = <&bt BT_SEL 4>;
+            layers = <5>;
+        };   
+        combo_BtClr {   //清除当前蓝牙配置文件，先按住B进入蓝牙层，然后同时按C+左手切层键+L
+            timeout-ms = <100>;
+            key-positions = <21 27 40>;
+            bindings = <&bt BT_CLR>;
+            layers = <5>;
+        };    
+        combo_LeftEnter {   //左手回车 E+T
+            timeout-ms = <50>;
+            key-positions = <3 5>;
+            bindings = <&kp ENTER>;
+            layers = <0>;
+        };    
+        combo_LeftDelete {   //左手删除  D+E
+            timeout-ms = <50>;
+            key-positions = <3 15>;
+            bindings = <&kp DEL>;
+            layers = <0>;
+        };     
+};
+
+
+
+
+    
 };
